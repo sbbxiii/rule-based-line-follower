@@ -32,11 +32,11 @@ The 5 analog sensors are spaced at approximately 15 mm intervals across the fron
 
 | Arduino Uno Pin | Sensor Pin | Array Position | Role in Navigation Logic |
 |:---:|:---:|:---:|:---|
-| **A0** | `S0` / `OUT1` | Far Left ($s_1$) | Detects sharp left turns and 90° deviations |
-| **A1** | `S1` / `OUT2` | Mid Left ($s_2$) | Detects moderate left curvature |
-| **A2** | `S2` / `OUT3` | Center ($s_3$) | Primary alignment reference for straight tracking |
-| **A3** | `S3` / `OUT4` | Mid Right ($s_4$) | Detects moderate right curvature |
-| **A4** | `S4` / `OUT5` | Far Right ($s_5$) | Detects sharp right turns and 90° deviations |
+| **A0** | `S0` / `OUT1` | Far Left (`s1`) | Detects sharp left turns and 90° deviations |
+| **A1** | `S1` / `OUT2` | Mid Left (`s2`) | Detects moderate left curvature |
+| **A2** | `S2` / `OUT3` | Center (`s3`) | Primary alignment reference for straight tracking |
+| **A3** | `S3` / `OUT4` | Mid Right (`s4`) | Detects moderate right curvature |
+| **A4** | `S4` / `OUT5` | Far Right (`s5`) | Detects sharp right turns and 90° deviations |
 | **5V** | `VCC` | Power Supply | 5.0 V regulated supply from Arduino Uno |
 | **GND** | `GND` | Ground Reference | Common ground plane |
 

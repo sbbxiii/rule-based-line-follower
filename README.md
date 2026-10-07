@@ -41,11 +41,11 @@ The electrical interconnects and power distribution network were designed in Eas
 
 | Arduino Pin | Hardware Interface | Module Terminal | Description |
 |:---:|:---:|:---:|:---|
-| **A0** | Analog In | Sensor `S0` | Far-Left IR Sensor ($s_1$) |
-| **A1** | Analog In | Sensor `S1` | Mid-Left IR Sensor ($s_2$) |
-| **A2** | Analog In | Sensor `S2` | Center Alignment Sensor ($s_3$) |
-| **A3** | Analog In | Sensor `S3` | Mid-Right IR Sensor ($s_4$) |
-| **A4** | Analog In | Sensor `S4` | Far-Right IR Sensor ($s_5$) |
+| **A0** | Analog In | Sensor `S0` | Far-Left IR Sensor (`s1`) |
+| **A1** | Analog In | Sensor `S1` | Mid-Left IR Sensor (`s2`) |
+| **A2** | Analog In | Sensor `S2` | Center Alignment Sensor (`s3`) |
+| **A3** | Analog In | Sensor `S3` | Mid-Right IR Sensor (`s4`) |
+| **A4** | Analog In | Sensor `S4` | Far-Right IR Sensor (`s5`) |
 | **D2** | PWM Out | L298N `ENA` | Left Motor Speed Enable |
 | **D3** | Digital Out | L298N `IN1` | Left Motor Direction 1 |
 | **D4** | Digital Out | L298N `IN2` | Left Motor Direction 2 |
@@ -125,15 +125,15 @@ The mapping adheres to bilateral symmetry:
 
 $$f([s_1, s_2, s_3, s_4, s_5]) = \varphi\Big(f([s_5, s_4, s_3, s_2, s_1])\Big)$$
 
-| State Vector $S$ | Binary Pattern | Action $f(S)$ | Physical Track Meaning |
+| State Vector (S) | Binary Pattern | Action f(S) | Physical Track Meaning |
 |:---:|:---:|:---:|:---|
-| $[1, 1, 0, 1, 1]$ | `0b11011` (27) | **$F$ (Forward)** | Line is perfectly centered under sensor 3 |
-| $[1, 1, 0, 0, 1]$ or $[1, 1, 1, 0, 1]$ | `0b11001` / `0b11101` | **$L$ (Slight Left)** | Line deviating left; gentle steering correction |
-| $[1, 0, 0, 1, 1]$ or $[1, 0, 1, 1, 1]$ | `0b10011` / `0b10111` | **$R$ (Slight Right)** | Line deviating right; gentle steering correction |
-| $[1, 1, 1, 0, 0]$ or $[1, 1, 1, 1, 0]$ | `0b11100` / `0b11110` | **$SL$ (Sharp Left)** | 90° left corner / branch detected; contra-rotation pivot |
-| $[0, 0, 1, 1, 1]$ or $[0, 1, 1, 1, 1]$ | `0b00111` / `0b01111` | **$SR$ (Sharp Right)** | 90° right corner / branch detected; contra-rotation pivot |
-| $[1, 1, 1, 1, 1]$ | `0b11111` (31) | **$H$ (Memory Fallback)** | Line lost: robot executes $\Gamma(S_{t-1})$ to regain line |
-| $[0, 0, 0, 0, 0]$ | `0b00000` (0) | **$H$ (Memory Fallback)** | Intersection crossroad: robot maintains trajectory momentum |
+| `[1, 1, 0, 1, 1]` | `0b11011` (27) | **`F` (Forward)** | Line is perfectly centered under sensor 3 |
+| `[1, 1, 0, 0, 1]` or `[1, 1, 1, 0, 1]` | `0b11001` / `0b11101` | **`L` (Slight Left)** | Line deviating left; gentle steering correction |
+| `[1, 0, 0, 1, 1]` or `[1, 0, 1, 1, 1]` | `0b10011` / `0b10111` | **`R` (Slight Right)** | Line deviating right; gentle steering correction |
+| `[1, 1, 1, 0, 0]` or `[1, 1, 1, 1, 0]` | `0b11100` / `0b11110` | **`SL` (Sharp Left)** | 90° left corner / branch detected; contra-rotation pivot |
+| `[0, 0, 1, 1, 1]` or `[0, 1, 1, 1, 1]` | `0b00111` / `0b01111` | **`SR` (Sharp Right)** | 90° right corner / branch detected; contra-rotation pivot |
+| `[1, 1, 1, 1, 1]` | `0b11111` (31) | **`H` (Memory Fallback)** | Line lost: robot executes Γ(S_prev) to regain line |
+| `[0, 0, 0, 0, 0]` | `0b00000` (0) | **`H` (Memory Fallback)** | Intersection crossroad: robot maintains trajectory momentum |
 
 ### 3. Motor Actuation Mapping $g: A \to \mathbb{Z}^4$
 Each action maps to dual PWM duty cycles ($v_L, v_R$) and directional polarities ($d_L, d_R \in \{+1, -1, 0\}$):
@@ -203,7 +203,7 @@ During development, the team evaluated both discrete rule-based control and cont
 
 | Design Dimension | Rule-Based FSM (Implemented) | Continuous PID Control |
 |:---|:---|:---|
-| **Computational Overhead** | **$O(1)$ constant time** lookup table; minimal CPU cycles | Requires floating-point arithmetic and continuous error computation |
+| **Computational Overhead** | **O(1) constant time** lookup table; minimal CPU cycles | Requires floating-point arithmetic and continuous error computation |
 | **Rotary Encoder Dependency** | **None**; operates open-loop using optical reflectance only | Typically requires wheel speed feedback for accurate derivative tuning |
 | **Mechanical Weight Tolerance** | Highly resilient to the robot's rear-heavy center of gravity | Jerky oscillation due to front sensor lift during high acceleration |
 | **Analog Optical Noise** | Completely filtered by binary thresholding | Fluctuations in analog optical levels distort the differential error term |
