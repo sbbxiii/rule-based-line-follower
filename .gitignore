@@ -1,0 +1,19 @@
+# Compiled Arduino / PlatformIO
+*.hex
+*.elf
+*.bin
+.pio/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+env/
+venv/
+
+# OS specific
+.DS_Store
+Thumbs.db
